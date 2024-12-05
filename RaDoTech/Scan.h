@@ -11,13 +11,13 @@ private:
 
     // store 24 measurements in the following order:
     // H1(left), H1(right), H2(left), H2(right), [...], F5(left), F5(right), F6(left), F6(right)
-    QList<int> scanResults;
+    QList<int> measurements;
 
 public:
     Scan(QDate &date);
 
     QDate getDate() const;
-    QList<int> getScanResults();
+    QList<int> getMeasurements() const;
 
 };
 
