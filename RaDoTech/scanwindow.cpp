@@ -1,13 +1,16 @@
 #include "scanwindow.h"
 #include "ui_scanwindow.h"
 
-ScanWindow::ScanWindow(QWidget *parent, QList<int>* list) :
+
+ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, battery* bat) :
     QDialog(parent),
     list(list),
     index(0),
     generator(new DataGenerator()),
-    ui(new Ui::ScanWindow)
+    ui(new Ui::ScanWindow),
+    batteryObj(bat)
 {
+
     ui->setupUi(this);
     connect(ui->scanButton, SIGNAL(released()), this, SLOT (handleScanPress()));
 }
@@ -20,6 +23,11 @@ ScanWindow::~ScanWindow()
 
 void ScanWindow::handleScanPress()
 {
+
+    if (batteryObj->getBatteryLevel() == 0) {
+        batteryObj->showLowBatteryWarning();
+        return;
+    }
     if(index > 23){    //todo: handle this case better later - probably exit the window or change display to "Done"
         QMessageBox msgError;
         msgError.setText("All scans complete");
@@ -65,5 +73,7 @@ void ScanWindow::handleScanPress()
     finalText += num;
     finalText += + ", " + side + " side";
     ui->label->setText(QString::fromStdString(finalText));
+    batteryObj->decreaseBatteryLevel();
+
 }
 
