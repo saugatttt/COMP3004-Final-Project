@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "UserProfileManager.h"
+#include "DataGenerator.h"
+#include <random>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,5 +21,8 @@ public:
 private:
     UserProfileManager* manager;
     Ui::MainWindow *ui;
+
+private slots:
+    void on_startScanButton_clicked();
 };
 #endif // MAINWINDOW_H

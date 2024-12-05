@@ -5,7 +5,6 @@ UserProfile::UserProfile(const QString& fN, const QString& lN, const QString& em
 {
     healthData = new HealthData();
 }
-
 QString UserProfile::getFirstName() const {
     return firstName;
 }
