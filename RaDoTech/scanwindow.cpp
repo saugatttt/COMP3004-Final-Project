@@ -2,13 +2,16 @@
 #include "ui_scanwindow.h"
 #include <random>
 
-ScanWindow::ScanWindow(QWidget *parent, QList<int>* list) :
+
+ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, battery* bat) :
     QDialog(parent),
     list(list),
     index(0),
     generator(new DataGenerator()),
-    ui(new Ui::ScanWindow)
+    ui(new Ui::ScanWindow),
+    batteryObj(bat)
 {
+
     ui->setupUi(this);
     connect(ui->scanButton, SIGNAL(released()), this, SLOT (handleScanPress()));
     connect(ui->saveExitButton, SIGNAL(released()), this, SLOT (handleSaveExitPress()));
@@ -33,7 +36,11 @@ void ScanWindow::handleSaveExitPress(){
 
 void ScanWindow::handleScanPress()
 {
-    //device not contacting skin
+    if (batteryObj->getBatteryLevel() == 0) {
+        batteryObj->showLowBatteryWarning();
+        return;
+    }
+        //device not contacting skin
     if(!ui->contactButton->isChecked()){
         QMessageBox msgError;
         msgError.setText("You must bring device to skin before scanning");
@@ -79,5 +86,7 @@ void ScanWindow::handleScanPress()
     finalText += num;
     finalText += + ", " + side + " side";
     ui->label->setText(QString::fromStdString(finalText));
+    batteryObj->decreaseBatteryLevel();
+
 }
 

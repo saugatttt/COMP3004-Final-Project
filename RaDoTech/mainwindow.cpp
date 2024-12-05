@@ -2,11 +2,16 @@
 #include "ui_mainwindow.h"
 #include "scanwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+
+    batteryObj = new battery(ui->progressBar);
+    connect(ui->chargeButton, SIGNAL(released()), this, SLOT (chargeButtonClicked()));
 
     /*
      * Rami's old test stuff
@@ -28,13 +33,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_startScanButton_clicked()   //todo: decide where this happens and establish the call sequence
 {
+
     QList<int> *list = new QList<int>();
-    ScanWindow *scanWindow = new ScanWindow(nullptr, list);
+
+    ScanWindow* scanWindow = new ScanWindow(nullptr, list,batteryObj);
     scanWindow->setModal(true);
     scanWindow->exec();
     delete scanWindow;
     qDebug()<<list->size();
     list->clear();
     delete list;
+}
+
+
+void MainWindow::chargeButtonClicked() {
+    batteryObj->chargeBattery();
 }
 

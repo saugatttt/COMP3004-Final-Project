@@ -7,6 +7,9 @@
 #include <random>
 #include "scanwindow.h"
 
+#include "battery.h"
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -22,8 +25,14 @@ public:
 private:
     UserProfileManager* manager;
     Ui::MainWindow *ui;
-
+    battery *batteryObj;
 private slots:
     void on_startScanButton_clicked();
+    void chargeButtonClicked();
+
 };
+
+
+
+
 #endif // MAINWINDOW_H

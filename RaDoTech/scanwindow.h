@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QDialog>
 #include "DataGenerator.h"
+#include"battery.h"
 
 #define GLOBAL_RAND_RANGE 10
 
@@ -17,7 +18,7 @@ class ScanWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ScanWindow(QWidget *parent = nullptr, QList<int>* list = nullptr);
+    explicit ScanWindow(QWidget *parent = nullptr, QList<int>* list = nullptr, battery* batteryObj = nullptr);
     ~ScanWindow();
 
 private slots:
@@ -30,6 +31,7 @@ private:
     int index;
     int globalDeviation;
     DataGenerator* generator;
+    battery* batteryObj;
 };
 
 #endif // SCANWINDOW_H
