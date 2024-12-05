@@ -21,7 +21,8 @@ SOURCES += \
     mainwindow.cpp \
     selectprofiledialog.cpp \
     updateprofiledialog.cpp \
-    scanwindow.cpp
+    scanwindow.cpp \
+    battery.cpp
 
 
 HEADERS += \
@@ -36,7 +37,8 @@ HEADERS += \
     mainwindow.h \
     scanwindow.h \
     selectprofiledialog.h \
-    updateprofiledialog.h
+    updateprofiledialog.h \
+    battery.h
 
 
 FORMS += \

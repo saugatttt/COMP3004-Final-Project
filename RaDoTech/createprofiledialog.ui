@@ -97,6 +97,20 @@
      </widget>
     </item>
    </layout>
+   <zorder>label_6</zorder>
+   <zorder>label_7</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_5</zorder>
+   <zorder>heightCreateProfileEdit</zorder>
+   <zorder>weightCreateProfileEdit</zorder>
+   <zorder>ageCreateProfileEdit</zorder>
+   <zorder>genderCreateProfileEdit</zorder>
+   <zorder>emailCreateProfileEdit</zorder>
+   <zorder>lastNameCreateProfileEdit</zorder>
+   <zorder>firstNameCreateProfileEdit</zorder>
   </widget>
   <widget class="QPushButton" name="cancelProfileButton">
    <property name="geometry">
@@ -137,7 +151,7 @@
     <string>Fill out the information below:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="invalidEmailLabel">
+  <widget class="QLabel" name="invalidEntryLabel">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -154,6 +168,17 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>firstNameCreateProfileEdit</tabstop>
+  <tabstop>lastNameCreateProfileEdit</tabstop>
+  <tabstop>emailCreateProfileEdit</tabstop>
+  <tabstop>genderCreateProfileEdit</tabstop>
+  <tabstop>ageCreateProfileEdit</tabstop>
+  <tabstop>weightCreateProfileEdit</tabstop>
+  <tabstop>heightCreateProfileEdit</tabstop>
+  <tabstop>cancelProfileButton</tabstop>
+  <tabstop>confirmProfileButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

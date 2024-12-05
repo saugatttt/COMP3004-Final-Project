@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::onUserChanged() {
     if (currentUser == nullptr){
+        ui->loggedInStatus->setText("Logged out");
         ui->tabWidget->setTabEnabled(1, false);
         ui->tabWidget->setTabEnabled(2, false);
         ui->tabWidget->setTabEnabled(3, false);
@@ -60,6 +61,7 @@ void MainWindow::onUserChanged() {
         return;
     }
     QList<QWidget*> list = ui->tabWidget->findChildren<QWidget*>() ;
+    ui->loggedInStatus->setText("Logged in as: " + currentUser->getEmail());
     ui->tabWidget->setTabEnabled(1, true);
     ui->tabWidget->setTabEnabled(2, true);
     ui->tabWidget->setTabEnabled(3, true);
@@ -93,7 +95,21 @@ void MainWindow::createUserProfile() {
     Ui::CreateProfileDialog* createProfileUi = createProfileDialog.getUi();
     createProfileUi->confirmProfileButton->setEnabled(false);
 
-    if (manager->createUserProfile(createProfileUi->firstNameCreateProfileEdit->text(),
+    if (createProfileUi->firstNameCreateProfileEdit->text() == ""
+            || createProfileUi->lastNameCreateProfileEdit->text() == ""
+            || createProfileUi->emailCreateProfileEdit->text() == ""
+            || createProfileUi->genderCreateProfileEdit->text() == ""
+            || createProfileUi->ageCreateProfileEdit->text() == ""
+            || createProfileUi->weightCreateProfileEdit->text() == ""
+            || createProfileUi->heightCreateProfileEdit->text() == ""
+    ){
+        createProfileUi->invalidEntryLabel->setText("Empty field detected. Please fill out every field.");
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        createProfileUi->invalidEntryLabel->setText("");
+    }
+    else if (manager->createUserProfile(createProfileUi->firstNameCreateProfileEdit->text(),
                                    createProfileUi->lastNameCreateProfileEdit->text(),
                                    createProfileUi->emailCreateProfileEdit->text(),
                                    createProfileUi->genderCreateProfileEdit->text(),
@@ -112,11 +128,11 @@ void MainWindow::createUserProfile() {
     }
     else {
         createProfileUi->emailCreateProfileEdit->setText("");
-        createProfileUi->invalidEmailLabel->setText("Duplicate email detected. Please use another email.");
+        createProfileUi->invalidEntryLabel->setText("Duplicate email detected. Please use another email.");
         QEventLoop loop;
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
-        createProfileUi->invalidEmailLabel->setText("");
+        createProfileUi->invalidEntryLabel->setText("");
     }
     createProfileUi->confirmProfileButton->setEnabled(true);
 }
@@ -147,7 +163,21 @@ void MainWindow::updateUserProfile() {
     Ui::UpdateProfileDialog* updateProfileUi = updateProfileDialog.getUi();
     updateProfileUi->confirmProfileButton->setEnabled(false);
 
-    if (manager->updateUserProfile(updateProfileUi->firstNameUpdateProfileEdit->text(),
+    if (updateProfileUi->firstNameUpdateProfileEdit->text() == ""
+            || updateProfileUi->lastNameUpdateProfileEdit->text() == ""
+            || updateProfileUi->emailUpdateProfileEdit->text() == ""
+            || updateProfileUi->genderUpdateProfileEdit->text() == ""
+            || updateProfileUi->ageUpdateProfileEdit->text() == ""
+            || updateProfileUi->weightUpdateProfileEdit->text() == ""
+            || updateProfileUi->heightUpdateProfileEdit->text() == ""
+    ){
+        updateProfileUi->invalidEntryLabel->setText("Empty field detected. Please fill out every field.");
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        updateProfileUi->invalidEntryLabel->setText("");
+    }
+    else if (manager->updateUserProfile(updateProfileUi->firstNameUpdateProfileEdit->text(),
                                        updateProfileUi->lastNameUpdateProfileEdit->text(),
                                        updateProfileUi->emailUpdateProfileEdit->text(),
                                        updateProfileUi->genderUpdateProfileEdit->text(),
@@ -165,11 +195,11 @@ void MainWindow::updateUserProfile() {
         }
         else {
             updateProfileUi->emailUpdateProfileEdit->setText("");
-            updateProfileUi->invalidEmailLabel->setText("Email not found. Please use an appropriate email.");
+            updateProfileUi->invalidEntryLabel->setText("Email not found. Please use an appropriate email.");
             QEventLoop loop;
             QTimer::singleShot(3000, &loop, &QEventLoop::quit);
             loop.exec();
-            updateProfileUi->invalidEmailLabel->setText("");
+            updateProfileUi->invalidEntryLabel->setText("");
         }
 
     updateProfileDialog.close();
