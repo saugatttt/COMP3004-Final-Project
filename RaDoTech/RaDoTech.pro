@@ -9,29 +9,46 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    deleteprofiledialog.cpp \
     DataGenerator.cpp \
     HealthData.cpp \
     JsonPersistence.cpp \
     Scan.cpp \
     UserProfile.cpp \
     UserProfileManager.cpp \
+    createprofiledialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    scanwindow.cpp
+    selectprofiledialog.cpp \
+    updateprofiledialog.cpp \
+    scanwindow.cpp \
+    battery.cpp
+
 
 HEADERS += \
+    deleteprofiledialog.h \
     DataGenerator.h \
     HealthData.h \
     JsonPersistence.h \
     Scan.h \
     UserProfile.h \
     UserProfileManager.h \
+    createprofiledialog.h \
     mainwindow.h \
-    scanwindow.h
+    scanwindow.h \
+    selectprofiledialog.h \
+    updateprofiledialog.h \
+    battery.h
+
 
 FORMS += \
+    deleteprofiledialog.ui \
+    createprofiledialog.ui \
     mainwindow.ui \
-    scanwindow.ui
+    scanwindow.ui \
+    selectprofiledialog.ui \
+    updateprofiledialog.ui
+    
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
