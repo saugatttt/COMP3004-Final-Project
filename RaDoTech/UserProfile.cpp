@@ -6,6 +6,10 @@ UserProfile::UserProfile(const QString& fN, const QString& lN, const QString& em
     healthData = new HealthData();
 }
 
+UserProfile::~UserProfile() {
+    delete healthData;
+}
+
 QString UserProfile::getFirstName() const {
     return firstName;
 }
@@ -36,4 +40,32 @@ float UserProfile::getHeight() const {
 
 HealthData* UserProfile::getHealthData() {
     return healthData;
+}
+
+void UserProfile::setFirstName(QString name) {
+    firstName = name;
+}
+
+void UserProfile::setLastName(QString name) {
+    lastName = name;
+}
+
+void UserProfile::setEmail(QString e) {
+    email = e;
+}
+
+void UserProfile::setGender(QString g) {
+    gender = g;
+}
+
+void UserProfile::setAge(int a) {
+    age = a;
+}
+
+void UserProfile::setWeight(float w) {
+    weight = w;
+}
+
+void UserProfile::setHeight(float h) {
+    height = h;
 }

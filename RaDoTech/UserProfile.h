@@ -18,6 +18,7 @@ private:
 
 public:
     UserProfile(const QString &firstName, const QString &lastName, const QString& email, const QString &gender, int age, float weight, float height);
+    ~UserProfile();
 
     QString getFirstName() const;
     QString getLastName() const;
@@ -27,6 +28,14 @@ public:
     float getWeight() const;
     float getHeight() const;
     HealthData* getHealthData();
+
+    void setFirstName(QString name);
+    void setLastName(QString name);
+    void setEmail(QString a);
+    void setGender(QString g);
+    void setAge(int a);
+    void setWeight(float w);
+    void setHeight(float h);
 
 };
 

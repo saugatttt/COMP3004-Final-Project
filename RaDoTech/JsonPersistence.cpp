@@ -15,7 +15,6 @@ JsonPersistence::~JsonPersistence()
 bool JsonPersistence::addUser(UserProfile* user)
 {
     if (findIndex(user->getEmail()) != -1) {
-        // probably add some signal that alerts UI that duplicate email was found
         return false;
     }
     QJsonObject userJson = userProfileToJson(user);
@@ -23,12 +22,29 @@ bool JsonPersistence::addUser(UserProfile* user)
     return saveToJson();
 }
 
+bool JsonPersistence::updateUser(const QString& firstName, const QString& lastName, const QString& email, const QString& gender, int age, float weight, float height) {
+    int index = findIndex(email);
+    if (index == -1) {
+        return false;
+    }
+    QJsonObject user = userData.takeAt(index).toObject();
+    user["firstName"] = firstName;
+    user["lastName"] = lastName;
+    user["email"] = email;
+    user["gender"] = gender;
+    user["age"] = age;
+    user["weight"] = weight;
+    user["height"] = height;
+    userData.insert(index, user);
+
+    return saveToJson();
+}
+
+
 bool JsonPersistence::deleteUser(const QString& email)
 {
     int index = findIndex(email);
     if (index == -1) {
-        // probably add some signal that alerts UI that duplicate email was found
-        qWarning() << "not found";
         return false;
     }
     userData.removeAt(index);
@@ -59,7 +75,6 @@ bool JsonPersistence::loadFromJson()
 {
     QFile file(filePath);
     if (!file.exists()) {
-        qWarning() << "File does not exist, creating new file:" << filePath;
         return true;
     }
 
@@ -93,7 +108,7 @@ UserProfile* JsonPersistence::jsonToUserProfile(const QJsonObject& json) const
 {
     UserProfile* user = new UserProfile(json["firstName"].toString(),
             json["lastName"].toString(), json["email"].toString(), json["gender"].toString(), json["age"].toInt(),
-            json["weight"].toInt(), json["height"].toInt());
+            json["weight"].toDouble(), json["height"].toDouble());
     return user;
 }
 
