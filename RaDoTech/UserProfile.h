@@ -18,7 +18,7 @@ private:
 
 public:
     UserProfile(const QString &firstName, const QString &lastName, const QString& email, const QString &gender, int age, float weight, float height);
-
+    ~UserProfile();
     QString getFirstName() const;
     QString getLastName() const;
     QString getEmail() const;
