@@ -35,11 +35,14 @@ void MainWindow::on_startScanButton_clicked()   //todo: decide where this happen
 {
 
     QList<int> *list = new QList<int>();
-    ScanWindow* scanWindow = new ScanWindow(nullptr, list,batteryObj);     //todo: make this a field of the mainwindow object. This current setup was for very basic testing.
+
+    ScanWindow* scanWindow = new ScanWindow(nullptr, list,batteryObj);
     scanWindow->setModal(true);
     scanWindow->exec();
+    delete scanWindow;
     qDebug()<<list->size();
     list->clear();
+    delete list;
 }
 
 

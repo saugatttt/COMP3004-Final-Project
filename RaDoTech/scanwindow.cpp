@@ -1,5 +1,6 @@
 #include "scanwindow.h"
 #include "ui_scanwindow.h"
+#include <random>
 
 
 ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, battery* bat) :
@@ -13,6 +14,14 @@ ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, battery* bat) :
 
     ui->setupUi(this);
     connect(ui->scanButton, SIGNAL(released()), this, SLOT (handleScanPress()));
+    connect(ui->saveExitButton, SIGNAL(released()), this, SLOT (handleSaveExitPress()));
+    ui->saveExitButton->setVisible(false);
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    std::uniform_int_distribution<> dis(0 - GLOBAL_RAND_RANGE, GLOBAL_RAND_RANGE);
+    globalDeviation = dis(gen);  //will apply to all 24 measurements
 }
 
 ScanWindow::~ScanWindow()
@@ -21,22 +30,17 @@ ScanWindow::~ScanWindow()
     delete generator;
 }
 
+void ScanWindow::handleSaveExitPress(){
+    ScanWindow::close();
+}
+
 void ScanWindow::handleScanPress()
 {
-
     if (batteryObj->getBatteryLevel() == 0) {
         batteryObj->showLowBatteryWarning();
         return;
     }
-    if(index > 23){    //todo: handle this case better later - probably exit the window or change display to "Done"
-        QMessageBox msgError;
-        msgError.setText("All scans complete");
-        msgError.setIcon(QMessageBox::Warning);
-        msgError.exec();
-        return;
-    }
-
-    //device not contacting skin
+        //device not contacting skin
     if(!ui->contactButton->isChecked()){
         QMessageBox msgError;
         msgError.setText("You must bring device to skin before scanning");
@@ -46,10 +50,19 @@ void ScanWindow::handleScanPress()
     }
 
     this->ui->contactButton->setChecked(false);
-    int scanResult = generator->generateMeasurement(index, 0); //todo: set up globalrandomizer (second param)
+    int scanResult = generator->generateMeasurement(index, globalDeviation);
     list->append(scanResult);
 
     index ++;
+
+    //scan complete
+    if(index > 23){
+        ui->label->setText("All scans complete!");
+        ui->scanButton->setVisible(false);
+        ui->contactButton->setVisible(false);
+        ui->saveExitButton->setVisible(true);
+        return;
+    }
 
     //update GUI
     char letter;

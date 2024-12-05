@@ -5,9 +5,9 @@
 #include <QMessageBox>
 #include <QDialog>
 #include "DataGenerator.h"
-
 #include"battery.h"
 
+#define GLOBAL_RAND_RANGE 10
 
 namespace Ui {
 class ScanWindow;
@@ -23,11 +23,13 @@ public:
 
 private slots:
     void handleScanPress();
+    void handleSaveExitPress();
 
 private:
     Ui::ScanWindow *ui;
     QList<int>* list;
     int index;
+    int globalDeviation;
     DataGenerator* generator;
     battery* batteryObj;
 };

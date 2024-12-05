@@ -5,6 +5,7 @@
 #include "UserProfileManager.h"
 #include "DataGenerator.h"
 #include <random>
+#include "scanwindow.h"
 
 #include "battery.h"
 
