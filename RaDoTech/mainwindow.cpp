@@ -4,6 +4,7 @@
 #include "ui_selectprofiledialog.h"
 #include "ui_updateprofiledialog.h"
 #include "ui_deleteprofiledialog.h"
+#include "scanwindow.h"
 #include <QEventLoop>
 #include <QTimer>
 #include <QStringListModel>
@@ -13,8 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+
     manager = new UserProfileManager("./users.json", nullptr);
+      
+    batteryObj = new battery(ui->progressBar);
+    connect(ui->chargeButton, SIGNAL(released()), this, SLOT (chargeButtonClicked()));
 
     connect(this, &MainWindow::userChanged, this, &MainWindow::onUserChanged);
     connect(this, &MainWindow::userListChanged, this, &MainWindow::onUserListChanged);
@@ -172,7 +178,6 @@ void MainWindow::updateUserProfile() {
 
 void MainWindow::deleteUserProfile() {
     Ui::DeleteProfileDialog* deleteProfileUi = deleteProfileDialog.getUi();
-
     QList<UserProfile*> userList = manager->getUsers();
 
     int selectedIndex = deleteProfileUi->userListView->currentIndex().row();
@@ -191,12 +196,30 @@ void MainWindow::deleteUserProfile() {
     manager->deleteUserProfile(userList[selectedIndex]->getEmail());
     deleteProfileDialog.close();
     emit userListChanged();
-
 }
 
 MainWindow::~MainWindow()
 {
     delete manager;
     delete ui;
+}
+
+void MainWindow::on_startScanButton_clicked()   //todo: decide where this happens and establish the call sequence
+{
+
+    QList<int> *list = new QList<int>();
+
+    ScanWindow* scanWindow = new ScanWindow(nullptr, list,batteryObj);
+    scanWindow->setModal(true);
+    scanWindow->exec();
+    delete scanWindow;
+    qDebug()<<list->size();
+    list->clear();
+    delete list;
+}
+
+
+void MainWindow::chargeButtonClicked() {
+    batteryObj->chargeBattery();
 }
 

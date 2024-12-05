@@ -7,6 +7,10 @@
 #include "updateprofiledialog.h"
 #include "selectprofiledialog.h"
 #include "deleteprofiledialog.h"
+#include "DataGenerator.h"
+#include <random>
+#include "scanwindow.h"
+#include "battery.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -46,5 +50,14 @@ private:
     DeleteProfileDialog deleteProfileDialog;
 
     Ui::MainWindow *ui;
+    battery *batteryObj;
+private slots:
+    void on_startScanButton_clicked();
+    void chargeButtonClicked();
+
 };
+
+
+
+
 #endif // MAINWINDOW_H

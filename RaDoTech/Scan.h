@@ -9,11 +9,15 @@ class Scan {
 private:
     QDate date;
 
+    // store 24 measurements in the following order:
+    // H1(left), H1(right), H2(left), H2(right), [...], F5(left), F5(right), F6(left), F6(right)
+    QList<int> measurements;
+
 public:
     Scan(QDate &date);
 
     QDate getDate() const;
-    // some data structure(s) that stores the scan data?
+    QList<int> getMeasurements() const;
 
 };
 

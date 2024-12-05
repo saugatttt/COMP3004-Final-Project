@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     deleteprofiledialog.cpp \
+    DataGenerator.cpp \
     HealthData.cpp \
     JsonPersistence.cpp \
     Scan.cpp \
@@ -19,10 +20,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     selectprofiledialog.cpp \
-    updateprofiledialog.cpp
+    updateprofiledialog.cpp \
+    scanwindow.cpp
+
 
 HEADERS += \
     deleteprofiledialog.h \
+    DataGenerator.h \
     HealthData.h \
     JsonPersistence.h \
     Scan.h \
@@ -30,15 +34,19 @@ HEADERS += \
     UserProfileManager.h \
     createprofiledialog.h \
     mainwindow.h \
+    scanwindow.h \
     selectprofiledialog.h \
     updateprofiledialog.h
+
 
 FORMS += \
     deleteprofiledialog.ui \
     createprofiledialog.ui \
     mainwindow.ui \
+    scanwindow.ui \
     selectprofiledialog.ui \
     updateprofiledialog.ui
+    
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
