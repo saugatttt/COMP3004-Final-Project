@@ -6,6 +6,9 @@
 #include <QDialog>
 #include "DataGenerator.h"
 
+#include"battery.h"
+
+
 namespace Ui {
 class ScanWindow;
 }
@@ -15,7 +18,7 @@ class ScanWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ScanWindow(QWidget *parent = nullptr, QList<int>* list = nullptr);
+    explicit ScanWindow(QWidget *parent = nullptr, QList<int>* list = nullptr, battery* batteryObj = nullptr);
     ~ScanWindow();
 
 private slots:
@@ -26,6 +29,7 @@ private:
     QList<int>* list;
     int index;
     DataGenerator* generator;
+    battery* batteryObj;
 };
 
 #endif // SCANWINDOW_H
