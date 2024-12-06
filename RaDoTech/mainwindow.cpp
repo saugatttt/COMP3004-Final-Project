@@ -297,7 +297,6 @@ void MainWindow::updateScanListView() {
     ui->scanListView->setModel(listModel);
 }
 
-
 void MainWindow::showRecommendation()
 {
     ui->recText->clear();
@@ -308,6 +307,20 @@ void MainWindow::showRecommendation()
 
     ui->recText->setText(recommendation);
     ui->recText->setWordWrap(true);
+}
 
+void MainWindow::on_testButton_clicked()
+{
+    // TODO: get scan data from Scan object
+    QDateTime date = QDateTime::currentDateTime();
+    QList<int> measurements;
+    QList<int> healthStatus;
+    for (int i = 0; i < 24; i++) {
+        measurements.append(24 + i);
+        healthStatus.append( (i % 3 == 0) ? 1 : 0 );
+    }
+    ChartWindow chartWindow(this, date, measurements, healthStatus);
+    chartWindow.setModal(true);
+    chartWindow.exec();
 }
 
