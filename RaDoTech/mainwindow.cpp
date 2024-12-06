@@ -89,7 +89,6 @@ void MainWindow::onUserListChanged() {
     selectProfileUi->userListView->setModel(listModel);
     deleteProfileUi->userListView->setModel(listModel);
 }
-
 void MainWindow::createUserProfile() {
 
     Ui::CreateProfileDialog* createProfileUi = createProfileDialog.getUi();
@@ -240,6 +239,7 @@ void MainWindow::on_startScanButton_clicked()   //todo: decide where this happen
     QList<int> *list = new QList<int>();
 
     ScanWindow* scanWindow = new ScanWindow(nullptr, list,batteryObj);
+    connect(scanWindow, &ScanWindow::scanComplete, this, &MainWindow::showRecommendation);
     scanWindow->setModal(true);
     scanWindow->exec();
     delete scanWindow;
@@ -251,5 +251,19 @@ void MainWindow::on_startScanButton_clicked()   //todo: decide where this happen
 
 void MainWindow::chargeButtonClicked() {
     batteryObj->chargeBattery();
+}
+
+
+void MainWindow::showRecommendation()
+{
+    ui->recText->clear();
+    QString recommendation = "Your overall tests were okay however, there are a few things you can do to improve. "
+                             "It's important to focus on maintaining a balanced diet, staying hydrated, and getting regular exercise. "
+                             "Additionally try to get enough sleep and manage your stress effectively."
+                             "By implementing these few tips into your daily routine, you find a large improvement in your well being, mental health, and better test results.";
+
+    ui->recText->setText(recommendation);
+    ui->recText->setWordWrap(true);
+
 }
 

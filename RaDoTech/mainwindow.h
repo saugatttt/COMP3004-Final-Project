@@ -39,6 +39,9 @@ private slots:
     void onUserChanged();
     void onUserListChanged();
 
+public slots:
+    void showRecommendation();
+
 
 private:
     UserProfileManager* manager;
