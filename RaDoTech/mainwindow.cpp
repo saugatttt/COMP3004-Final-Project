@@ -52,6 +52,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+MainWindow::~MainWindow()
+{
+    delete manager;
+    delete ui;
+}
+
+
 void MainWindow::onUserChanged() {
     if (currentUser == nullptr){
         ui->loggedInStatus->setText("Logged out");
@@ -229,11 +236,6 @@ void MainWindow::deleteUserProfile() {
     emit userListChanged();
 }
 
-MainWindow::~MainWindow()
-{
-    delete manager;
-    delete ui;
-}
 
 void MainWindow::onStartScanButtonClicked()
 {
@@ -243,7 +245,31 @@ void MainWindow::onStartScanButtonClicked()
     scanWindow->exec();
     delete scanWindow;
 
-    //data processor goes here
+    //basic testing of data processor, feel free to remove
+    Scan* scan = DataProcessor::createScan(*list);
+
+    QList<int> scanMeasurements = scan->getMeasurements();
+    QList<HealthStatus> scanHealthLevels = scan->getHealthLevels();
+
+    for(int value : scanMeasurements){
+        qDebug() << value;
+    }
+
+    for(int i = 0; i<scanHealthLevels.size(); ++i){
+        std::string healthLevelAsString;
+        HealthStatus status = scanHealthLevels.at(i);
+
+        if(status == normal)
+            healthLevelAsString = "normal";
+        else if(status == high)
+            healthLevelAsString = "high";
+        else
+            healthLevelAsString = "low";
+
+        qDebug() << QString::fromStdString(healthLevelAsString);
+    }
+
+    delete scan;
     list->clear();
     delete list;
 }

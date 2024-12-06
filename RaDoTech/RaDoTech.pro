@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     RadoTechDevice.cpp \
+    DataProcessor.cpp \
     deleteprofiledialog.cpp \
     DataGenerator.cpp \
     HealthData.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 
 HEADERS += \
     RadoTechDevice.h \
+    DataProcessor.h \
     deleteprofiledialog.h \
     DataGenerator.h \
     HealthData.h \
