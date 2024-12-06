@@ -19,8 +19,11 @@ public:
     ~UserProfileManager();
 
     bool createUserProfile(const QString& firstName, const QString& lastName, const QString& email, const QString& gender, int age, float weight, float height);
+    bool updateUserProfile(const QString& firstName, const QString& lastName, const QString& email, const QString& gender, int age, float weight, float height);
     bool deleteUserProfile(const QString& email);
-    QList<UserProfile*> getUsers() const;
+    bool addScan(const QString& email);
+
+    const QList<UserProfile*>& getUsers() const;
 };
 
 #endif
