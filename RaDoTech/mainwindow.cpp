@@ -48,8 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deleteProfileDialog.getUi()->cancelProfileButton, &QPushButton::clicked, &deleteProfileDialog, &DeleteProfileDialog::close);
 
     connect(ui->startScanButton, &QPushButton::clicked, this, &MainWindow::onStartScanButtonClicked);
-
-
+    connect(ui->confirmViewScanButton, &QPushButton::clicked, this, &MainWindow::onConfirmViewScanButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -74,8 +73,10 @@ void MainWindow::onUserChanged() {
     ui->tabWidget->setTabEnabled(2, true);
     ui->tabWidget->setTabEnabled(3, true);
     ui->tabWidget->setTabEnabled(4, true);
-    return;
 
+    updateScanListView();
+
+    return;
 }
 
 void MainWindow::onUserListChanged() {
@@ -238,6 +239,14 @@ void MainWindow::deleteUserProfile() {
 
 void MainWindow::onStartScanButtonClicked()
 {
+    if(!ui->jewelryToggle->isChecked() || !ui->moisturizedToggle->isChecked()){
+        QMessageBox msgError;
+        msgError.setText("You must remove your jewelry and moisturize your skin before starting your scan");
+        msgError.setIcon(QMessageBox::Warning);
+        msgError.exec();
+        return;
+    }
+
     QList<int> *list = new QList<int>();
     connect(scanWindow, &ScanWindow::scanComplete, this, &MainWindow::showRecommendation);
   
@@ -246,33 +255,46 @@ void MainWindow::onStartScanButtonClicked()
     scanWindow->exec();
     delete scanWindow;
 
-    //basic testing of data processor, feel free to remove
-    Scan* scan = DataProcessor::createScan(*list);
-
-    QList<int> scanMeasurements = scan->getMeasurements();
-    QList<HealthStatus> scanHealthLevels = scan->getHealthLevels();
-
-    for(int value : scanMeasurements){
-        qDebug() << value;
+    if (list->size() == 24){
+        manager->addScan(currentUser->getEmail(), DataProcessor::createScan(*list));
+        updateScanListView();
     }
 
-    for(int i = 0; i<scanHealthLevels.size(); ++i){
-        std::string healthLevelAsString;
-        HealthStatus status = scanHealthLevels.at(i);
-
-        if(status == normal)
-            healthLevelAsString = "normal";
-        else if(status == high)
-            healthLevelAsString = "high";
-        else
-            healthLevelAsString = "low";
-
-        qDebug() << QString::fromStdString(healthLevelAsString);
-    }
-
-    delete scan;
     list->clear();
     delete list;
+}
+
+void MainWindow::onConfirmViewScanButtonClicked(){
+    ui->confirmViewScanButton->setEnabled(false);
+
+   // todo: the scanListView must be populated with history of scans before we get in here
+
+    int selectedIndex = ui->scanListView->currentIndex().row();
+    if (selectedIndex == -1){
+        ui->invalidSelectionLabel->setText("No user selected. Please select a user.");
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        ui->invalidSelectionLabel->setText("");
+        ui->confirmViewScanButton->setEnabled(true);
+        return;
+    }
+
+   // todo: get currScan from the datetime? then call view scan on currScan
+   // currScan = scans[selectedIndex];
+   // dataVisualizer.viewScan(currScan);
+   // ui->confirmViewScanButton->setEnabled(true);
+}
+
+void MainWindow::updateScanListView() {
+    QList<Scan*> userScans = currentUser->getHealthData()->getScans();
+
+    QStringList scanDates = QStringList();
+    for (Scan* scan : userScans) {
+        scanDates.append(scan->getDateTime().toString("yyyy-MM-dd   HH:mm:ss a t"));
+    }
+    QStringListModel* listModel = new QStringListModel(scanDates, ui->scanListView);
+    ui->scanListView->setModel(listModel);
 }
 
 

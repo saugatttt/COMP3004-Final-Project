@@ -26,7 +26,7 @@ private:
 
 public:
     DataProcessor();
-    static Scan* createScan(QList<int> data);
+    static Scan* createScan(QList<int> data = QList<int>(), QDateTime datetime = QDateTime::currentDateTime());
 };
 
 #endif // DATAPROCESSOR_H

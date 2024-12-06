@@ -10,6 +10,7 @@ private:
 
 public:
     HealthData();
+    ~HealthData();
 
     void addScan(Scan* scan);
     const QList<Scan*>& getScans() const;

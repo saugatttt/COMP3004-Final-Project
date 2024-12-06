@@ -1,4 +1,5 @@
 #include "JsonPersistence.h"
+#include "DataProcessor.h"
 #include <QDebug>
 
 JsonPersistence::JsonPersistence(const QString &filePath, QObject *parent)
@@ -35,6 +36,31 @@ bool JsonPersistence::updateUser(const QString& firstName, const QString& lastNa
     user["age"] = age;
     user["weight"] = weight;
     user["height"] = height;
+    userData.insert(index, user);
+
+    return saveToJson();
+}
+
+bool JsonPersistence::updateUser(const QString& email, Scan* scan) {
+    int index = findIndex(email);
+    if (index == -1) {
+        return false;
+    }
+    QJsonObject user = userData.takeAt(index).toObject();
+    QJsonArray scans = user["healthData"].toArray();
+
+    QJsonArray measurementArr;
+    for (int i = 0; i < scan->getMeasurements().length(); i++) {
+        measurementArr.append(scan->getMeasurements()[i]);
+    }
+    QJsonObject scanObj;
+    scanObj["date"] = scan->getDateTime().toString();
+    scanObj["measurements"] = measurementArr;
+
+    scans.append(scanObj);
+
+    user["healthData"] = scans;
+
     userData.insert(index, user);
 
     return saveToJson();
@@ -100,7 +126,20 @@ QJsonObject JsonPersistence::userProfileToJson(UserProfile* user) const
     json["weight"] = user->getWeight();
     json["height"] = user->getHeight();
 
-    // need to add saving health data, will be done when we know what the scan structure looks like
+    QJsonArray scanArr;
+    QList<Scan*> scans = user->getHealthData()->getScans();
+    for (Scan* scan : scans) {
+        QJsonArray measurementArr;
+        for (int i = 0; i < scan->getMeasurements().length(); i++) {
+            measurementArr.append(scan->getMeasurements()[i]);
+        }
+        QJsonObject scanObj;
+        scanObj["date"] = scan->getDateTime().toString();
+        scanObj["measurements"] = measurementArr;
+        scanArr.append(scanObj);
+    }
+    json["healthData"] = scanArr;
+
     return json;
 }
 
@@ -109,6 +148,17 @@ UserProfile* JsonPersistence::jsonToUserProfile(const QJsonObject& json) const
     UserProfile* user = new UserProfile(json["firstName"].toString(),
             json["lastName"].toString(), json["email"].toString(), json["gender"].toString(), json["age"].toInt(),
             json["weight"].toDouble(), json["height"].toDouble());
+
+    QJsonArray scanArr = json["healthData"].toArray();
+    for (QJsonValue scan : scanArr) {
+        QJsonObject scanObj = scan.toObject();
+        QJsonArray measurementArr = scanObj["measurements"].toArray();
+        QList<int> nums;
+        for (QJsonValue measurement : measurementArr){
+            nums.append(measurement.toInt());
+        }
+        user->addScan(DataProcessor::createScan(nums, QDateTime::fromString(scanObj["date"].toString())));
+    }
     return user;
 }
 

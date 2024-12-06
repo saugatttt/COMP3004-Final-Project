@@ -38,6 +38,18 @@ bool UserProfileManager::updateUserProfile(const QString& firstName, const QStri
     return false;
 }
 
+bool UserProfileManager::addScan(const QString& email, Scan* scan) {
+    for (int i = 0; i < users.size(); ++i) {
+        if (users[i]->getEmail() == email) {
+            if (persistenceStrategy.updateUser(email, scan)){
+                users[i]->addScan(scan);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool UserProfileManager::deleteUserProfile(const QString& email) {
     for (int i = 0; i < users.size(); ++i) {
         if (users[i]->getEmail() == email) {

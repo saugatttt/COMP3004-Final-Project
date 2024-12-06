@@ -4,8 +4,7 @@ DataProcessor::DataProcessor()
 {
 }
 
-Scan* DataProcessor::createScan(QList<int> data){
-    QDate date = QDate::currentDate();
+Scan* DataProcessor::createScan(QList<int> data, QDateTime dateTime){
 
     QList<HealthStatus> healthLevels;
 
@@ -32,7 +31,7 @@ Scan* DataProcessor::createScan(QList<int> data){
             healthLevels.append(normal);
     }
 
-    Scan* scan = new Scan(date, data, healthLevels);
+    Scan* scan = new Scan(dateTime, data, healthLevels);
     return scan;
 }
 

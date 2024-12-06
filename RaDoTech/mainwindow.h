@@ -31,6 +31,7 @@ public:
     void selectUserProfile();
     void updateUserProfile();
     void deleteUserProfile();
+    void updateScanListView();
 
 signals:
     void userChanged();
@@ -41,6 +42,7 @@ private slots:
     void onUserChanged();
     void onUserListChanged();
     void onStartScanButtonClicked();
+    void onConfirmViewScanButtonClicked();
 
 public slots:
     void showRecommendation();

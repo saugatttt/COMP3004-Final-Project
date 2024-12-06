@@ -19,7 +19,6 @@ ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, RadoTechDevice* device
 ScanWindow::~ScanWindow()
 {
     delete ui;
-    delete generator;
 }
 
 void ScanWindow::handleSaveExitPress(){
@@ -32,7 +31,8 @@ void ScanWindow::handleScanPress()
         device->getBattery()->showLowBatteryWarning();
         return;
     }
-        //device not contacting skin
+
+    //device not contacting skin
     if(!ui->contactButton->isChecked()){
         QMessageBox msgError;
         msgError.setText("You must bring device to skin before scanning");
