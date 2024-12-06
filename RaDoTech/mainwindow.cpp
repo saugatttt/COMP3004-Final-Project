@@ -97,6 +97,15 @@ void MainWindow::onUserListChanged() {
 
     selectProfileUi->userListView->setModel(listModel);
     deleteProfileUi->userListView->setModel(listModel);
+
+    if (userList.length() >= MAX_USERS){
+        createProfileDialog.getUi()->invalidEntryLabel->setText("Maximum number of profiles reached. Delete a profile before creating another.");
+        createProfileDialog.getUi()->confirmProfileButton->setEnabled(false);
+    }
+    else {
+        createProfileDialog.getUi()->invalidEntryLabel->setText("");
+        createProfileDialog.getUi()->confirmProfileButton->setEnabled(true);
+    }
 }
 void MainWindow::createUserProfile() {
 
@@ -116,6 +125,7 @@ void MainWindow::createUserProfile() {
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
         createProfileUi->invalidEntryLabel->setText("");
+        createProfileUi->confirmProfileButton->setEnabled(true);
     }
     else if (manager->createUserProfile(createProfileUi->firstNameCreateProfileEdit->text(),
                                    createProfileUi->lastNameCreateProfileEdit->text(),
@@ -132,6 +142,7 @@ void MainWindow::createUserProfile() {
         createProfileUi->ageCreateProfileEdit->setText("");
         createProfileUi->weightCreateProfileEdit->setText("");
         createProfileUi->heightCreateProfileEdit->setText("");
+        createProfileUi->confirmProfileButton->setEnabled(true);
         emit userListChanged();
     }
     else {
@@ -141,8 +152,8 @@ void MainWindow::createUserProfile() {
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
         createProfileUi->invalidEntryLabel->setText("");
+        createProfileUi->confirmProfileButton->setEnabled(true);
     }
-    createProfileUi->confirmProfileButton->setEnabled(true);
 }
 
 void MainWindow::selectUserProfile() {
@@ -248,9 +259,10 @@ void MainWindow::onStartScanButtonClicked()
     }
 
     QList<int> *list = new QList<int>();
-    connect(scanWindow, &ScanWindow::scanComplete, this, &MainWindow::showRecommendation);
   
     ScanWindow* scanWindow = new ScanWindow(nullptr, list, device);
+    connect(scanWindow, &ScanWindow::scanComplete, this, &MainWindow::showRecommendation);
+
     scanWindow->setModal(true);
     scanWindow->exec();
     delete scanWindow;
@@ -279,11 +291,13 @@ void MainWindow::onConfirmViewScanButtonClicked(){
         ui->confirmViewScanButton->setEnabled(true);
         return;
     }
+    QList<Scan*> scans = currentUser->getHealthData()->getScans();
 
-   // todo: get currScan from the datetime? then call view scan on currScan
-   // currScan = scans[selectedIndex];
-   // dataVisualizer.viewScan(currScan);
-   // ui->confirmViewScanButton->setEnabled(true);
+    QDateTime date = QDateTime::currentDateTime();
+    ChartWindow chartWindow(this, scans.at(selectedIndex)->getDateTime(), scans.at(selectedIndex)->getMeasurements(), scans.at(selectedIndex)->getHealthLevels());
+    chartWindow.setModal(true);
+    chartWindow.exec();
+    ui->confirmViewScanButton->setEnabled(true);
 }
 
 void MainWindow::updateScanListView() {
@@ -307,20 +321,5 @@ void MainWindow::showRecommendation()
 
     ui->recText->setText(recommendation);
     ui->recText->setWordWrap(true);
-}
-
-void MainWindow::on_testButton_clicked()
-{
-    // TODO: get scan data from Scan object
-    QDateTime date = QDateTime::currentDateTime();
-    QList<int> measurements;
-    QList<int> healthStatus;
-    for (int i = 0; i < 24; i++) {
-        measurements.append(24 + i);
-        healthStatus.append( (i % 3 == 0) ? 1 : 0 );
-    }
-    ChartWindow chartWindow(this, date, measurements, healthStatus);
-    chartWindow.setModal(true);
-    chartWindow.exec();
 }
 

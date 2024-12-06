@@ -13,7 +13,7 @@
 
 using namespace QtCharts;
 
-ChartWindow::ChartWindow(QWidget *parent, QDateTime date, const QList<int>& measurements, const QList<int>& healthStatus) :
+ChartWindow::ChartWindow(QWidget *parent, QDateTime date, const QList<int>& measurements, const QList<HealthStatus>& healthStatus) :
     QDialog(parent), date(date), measurements(measurements), healthStatus(healthStatus),
     ui(new Ui::ChartWindow) {
     ui->setupUi(this);

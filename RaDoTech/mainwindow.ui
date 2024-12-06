@@ -21,13 +21,13 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>30</y>
       <width>781</width>
       <height>521</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="Home">
      <attribute name="title">
@@ -86,7 +86,7 @@
         <family>DejaVu Serif</family>
         <pointsize>30</pointsize>
         <weight>75</weight>
-        <italic>true</italic>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
@@ -111,11 +111,6 @@ User Interface</string>
        <string>Update Profile</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Profiles</string>
-     </attribute>
     </widget>
     <widget class="QWidget" name="scanTab">
      <attribute name="title">
@@ -160,6 +155,32 @@ User Interface</string>
        <string>Moisturize your skin</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>60</y>
+        <width>291</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans</family>
+        <pointsize>18</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Scan with the
+RadoTech Device:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -174,18 +195,29 @@ User Interface</string>
         <height>321</height>
        </rect>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="label_21">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>30</y>
-        <width>221</width>
+        <x>30</x>
+        <y>20</y>
+        <width>371</width>
         <height>17</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>Select the scan you wish to view</string>
+       <string>Select the scan you wish to view:</string>
       </property>
      </widget>
      <widget class="QPushButton" name="confirmViewScanButton">
@@ -232,7 +264,7 @@ User Interface</string>
        <string>                          You must complete a scan first to obtain recommendations</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
         <x>310</x>

@@ -15,6 +15,8 @@
 #include "Battery.h"
 #include "DataProcessor.h"
 
+#define MAX_USERS 5
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -43,8 +45,6 @@ private slots:
     void onUserListChanged();
     void onStartScanButtonClicked();
     void onConfirmViewScanButtonClicked();
-    void on_testButton_clicked();
-
 
 public slots:
     void showRecommendation();
