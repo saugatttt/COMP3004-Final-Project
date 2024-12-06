@@ -9,6 +9,9 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Battery.cpp \
+    RadoTechDevice.cpp \
+    DataProcessor.cpp \
     deleteprofiledialog.cpp \
     DataGenerator.cpp \
     HealthData.cpp \
@@ -23,10 +26,12 @@ SOURCES += \
     updateprofiledialog.cpp \
     scanwindow.cpp \
     chartwindow.cpp \
-    battery.cpp
 
 
 HEADERS += \
+    Battery.h \
+    RadoTechDevice.h \
+    DataProcessor.h \
     deleteprofiledialog.h \
     DataGenerator.h \
     HealthData.h \
@@ -40,7 +45,6 @@ HEADERS += \
     chartwindow.h \
     selectprofiledialog.h \
     updateprofiledialog.h \
-    battery.h
 
 
 FORMS += \

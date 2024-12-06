@@ -134,22 +134,84 @@ User Interface</string>
        <string>Start Scan</string>
       </property>
      </widget>
+     <widget class="QCheckBox" name="jewelryToggle">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>160</y>
+        <width>171</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Take off your jewelry</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="moisturizedToggle">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>190</y>
+        <width>211</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Moisturize your skin</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
       <string>History</string>
      </attribute>
-     <widget class="QPushButton" name="testButton">
+     <widget class="QListView" name="scanListView">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>10</y>
-        <width>771</width>
+        <x>30</x>
+        <y>50</y>
+        <width>711</width>
+        <height>321</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>30</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select the scan you wish to view</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="confirmViewScanButton">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>420</y>
+        <width>151</width>
         <height>41</height>
        </rect>
       </property>
       <property name="text">
-       <string>Scan test</string>
+       <string>View Scan</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="invalidSelectionLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>390</y>
+        <width>391</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>
@@ -217,14 +279,14 @@ User Interface</string>
  <resources/>
  <connections>
   <connection>
-   <sender>startScanButton</sender>
+   <sender>confirmViewScanButton</sender>
    <signal>released()</signal>
    <receiver>MainWindow</receiver>
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>117</x>
-     <y>101</y>
+     <x>147</x>
+     <y>511</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>

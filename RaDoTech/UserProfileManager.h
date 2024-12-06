@@ -20,6 +20,7 @@ public:
 
     bool createUserProfile(const QString& firstName, const QString& lastName, const QString& email, const QString& gender, int age, float weight, float height);
     bool updateUserProfile(const QString& firstName, const QString& lastName, const QString& email, const QString& gender, int age, float weight, float height);
+    bool addScan(const QString& email, Scan* scan);
     bool deleteUserProfile(const QString& email);
     bool addScan(const QString& email);
 

@@ -3,6 +3,12 @@
 HealthData::HealthData() {
 }
 
+HealthData::~HealthData() {
+    for (Scan* scan : scans){
+        delete scan;
+    }
+}
+
 void HealthData::addScan(Scan* scan) {
     scans.push_back(scan);
 }

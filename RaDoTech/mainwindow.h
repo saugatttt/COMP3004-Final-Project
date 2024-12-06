@@ -11,8 +11,9 @@
 #include <random>
 #include "scanwindow.h"
 #include "chartwindow.h"
-#include "battery.h"
-
+#include "RadoTechDevice.h"
+#include "Battery.h"
+#include "DataProcessor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,6 +31,7 @@ public:
     void selectUserProfile();
     void updateUserProfile();
     void deleteUserProfile();
+    void updateScanListView();
 
 signals:
     void userChanged();
@@ -39,10 +41,14 @@ signals:
 private slots:
     void onUserChanged();
     void onUserListChanged();
+    void onStartScanButtonClicked();
+    void onConfirmViewScanButtonClicked();
+    void on_testButton_clicked();
 
 
 private:
     UserProfileManager* manager;
+    RadoTechDevice* device;
     UserProfile* currentUser = nullptr;
 
     CreateProfileDialog createProfileDialog;
@@ -51,11 +57,6 @@ private:
     DeleteProfileDialog deleteProfileDialog;
 
     Ui::MainWindow *ui;
-    battery *batteryObj;
-private slots:
-    void on_startScanButton_clicked();
-    void chargeButtonClicked();
-    void on_testButton_clicked();
 };
 
 
