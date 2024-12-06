@@ -1,13 +1,13 @@
 #include "Scan.h"
 
-Scan::Scan(QDate& date, QList<int> measurements, QList<HealthStatus> healthLevels)
-    : date(date),
+Scan::Scan(QDateTime& dateTime, QList<int> measurements, QList<HealthStatus> healthLevels)
+    : dateTime(dateTime),
       measurements(measurements),
       healthLevels(healthLevels)
 {
 }
 
-QDate Scan::getDate() const { return date; }
+QDateTime Scan::getDateTime() const { return dateTime; }
 
 QList<int> Scan::getMeasurements() const {return measurements;}
 

@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deleteProfileDialog.getUi()->cancelProfileButton, &QPushButton::clicked, &deleteProfileDialog, &DeleteProfileDialog::close);
 
     connect(ui->startScanButton, &QPushButton::clicked, this, &MainWindow::onStartScanButtonClicked);
+    connect(ui->confirmViewScanButton, &QPushButton::clicked, this, &MainWindow::onConfirmViewScanButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -72,8 +73,36 @@ void MainWindow::onUserChanged() {
     ui->tabWidget->setTabEnabled(2, true);
     ui->tabWidget->setTabEnabled(3, true);
     ui->tabWidget->setTabEnabled(4, true);
-    return;
 
+  // todo: get the actual user's scans
+
+    //testing, auto-generated scans
+    QList<Scan> userScans;
+
+    QList<int> rawData;
+
+    for(int i = 0; i<24; ++i){
+        int value = device->generateMeasurement(i);
+        rawData.append(value);
+    }
+    Scan* scan1 = DataProcessor::createScan(rawData);
+    Scan* scan2 = DataProcessor::createScan(rawData);
+
+    userScans.append(*scan1);
+    userScans.append(*scan2);
+
+    //the following can be used for real
+    QStringList scanDates = QStringList();
+    for (Scan scan : userScans) {
+        scanDates.append(scan.getDateTime().toString("yyyy-MM-dd   HH:mm:ss a t"));
+    }
+    QStringListModel* listModel = new QStringListModel(scanDates, ui->scanListView);
+
+    ui->scanListView->setModel(listModel);
+
+    delete scan1;
+    delete scan2;
+    return;
 }
 
 void MainWindow::onUserListChanged() {
@@ -252,7 +281,7 @@ void MainWindow::onStartScanButtonClicked()
     delete scanWindow;
 
     //basic testing of data processor, feel free to remove
-    if(list->size() != 23){
+    if(list->size() != 24){
         list->clear();
         delete list;
         return;
@@ -282,3 +311,24 @@ void MainWindow::onStartScanButtonClicked()
     delete list;
 }
 
+void MainWindow::onConfirmViewScanButtonClicked(){
+    ui->confirmViewScanButton->setEnabled(false);
+
+   // todo: the scanListView must be populated with history of scans before we get in here
+
+    int selectedIndex = ui->scanListView->currentIndex().row();
+    if (selectedIndex == -1){
+        ui->invalidSelectionLabel->setText("No user selected. Please select a user.");
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        ui->invalidSelectionLabel->setText("");
+        ui->confirmViewScanButton->setEnabled(true);
+        return;
+    }
+
+   // todo: get currScan from the datetime? then call view scan on currScan
+   // currScan = scans[selectedIndex];
+   // dataVisualizer.viewScan(currScan);
+   // ui->confirmViewScanButton->setEnabled(true);
+}
