@@ -69,3 +69,7 @@ void UserProfile::setWeight(float w) {
 void UserProfile::setHeight(float h) {
     height = h;
 }
+
+void UserProfile::addScan(Scan* scan) {
+    healthData->addScan(scan);
+}

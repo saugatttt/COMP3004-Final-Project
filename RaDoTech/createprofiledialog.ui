@@ -176,8 +176,8 @@
   <tabstop>ageCreateProfileEdit</tabstop>
   <tabstop>weightCreateProfileEdit</tabstop>
   <tabstop>heightCreateProfileEdit</tabstop>
-  <tabstop>cancelProfileButton</tabstop>
   <tabstop>confirmProfileButton</tabstop>
+  <tabstop>cancelProfileButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

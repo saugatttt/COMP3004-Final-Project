@@ -1,20 +1,24 @@
-#include "battery.h"
+#include "Battery.h"
 #include <QMessageBox>
 #include <QPushButton>
 
-battery::battery(QProgressBar* progressBar) :batteryLevel(100), progressBar(progressBar)
+Battery::Battery(QProgressBar* progressBar) : QObject(nullptr), batteryLevel(100), progressBar(progressBar)
 {
     progressBar->setRange(0, 100);
     progressBar->setValue(batteryLevel);
 }
 
+Battery::~Battery(){
 
-int battery::getBatteryLevel()
+}
+
+
+int Battery::getBatteryLevel()
 {
     return batteryLevel;
 }
 
-void battery::chargeBattery()
+void Battery::chargeBattery()
 {
     batteryLevel = 100;
 
@@ -22,7 +26,7 @@ void battery::chargeBattery()
     progressBar->setStyleSheet("");
 }
 
-void battery::decreaseBatteryLevel()
+void Battery::decreaseBatteryLevel()
 {
     if (batteryLevel > 0) {
         batteryLevel -= 2;
@@ -44,19 +48,19 @@ void battery::decreaseBatteryLevel()
 
 }
 
-void battery::showLowBatteryWarning() {
+void Battery::showLowBatteryWarning() {
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.setText("Battery is low! Please recharge to continue.");
     QPushButton* rechargeButton = msgBox.addButton("Recharge", QMessageBox::AcceptRole);
-    QPushButton* cancelButton = msgBox.addButton("Don't charge", QMessageBox::RejectRole);
+    msgBox.addButton("Don't charge", QMessageBox::RejectRole);
 
     msgBox.exec();
 
     if (msgBox.clickedButton()->text() == rechargeButton->text()) {
         chargeBattery();
     }
+    else {
+        msgBox.close();
+    }
 }
-
-
-
