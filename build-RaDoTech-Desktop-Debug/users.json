@@ -1,0 +1,20 @@
+[
+    {
+        "age": 100,
+        "email": "owe",
+        "firstName": "dj",
+        "gender": "M",
+        "height": 100,
+        "lastName": "dj",
+        "weight": 100
+    },
+    {
+        "age": 11,
+        "email": "asdf",
+        "firstName": "dsfa",
+        "gender": "e",
+        "height": 11,
+        "lastName": "afdf",
+        "weight": 11
+    }
+]

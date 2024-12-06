@@ -10,6 +10,7 @@
 #include "DataGenerator.h"
 #include <random>
 #include "scanwindow.h"
+#include "chartwindow.h"
 #include "battery.h"
 
 
@@ -54,7 +55,7 @@ private:
 private slots:
     void on_startScanButton_clicked();
     void chargeButtonClicked();
-
+    void on_testButton_clicked();
 };
 
 

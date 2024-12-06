@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="Home">
      <attribute name="title">
@@ -139,6 +139,19 @@ User Interface</string>
      <attribute name="title">
       <string>History</string>
      </attribute>
+     <widget class="QPushButton" name="testButton">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>771</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Scan test</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
