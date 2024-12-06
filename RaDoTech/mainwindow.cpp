@@ -260,7 +260,7 @@ void MainWindow::on_testButton_clicked()
     QList<int> healthStatus;
     for (int i = 0; i < 24; i++) {
         measurements.append(24 + i);
-        healthStatus.append( (i % 3 == 0) ? 0 : 1 );
+        healthStatus.append( (i % 3 == 0) ? 1 : 0 );
     }
     ChartWindow chartWindow(this, date, measurements, healthStatus);
     chartWindow.setModal(true);

@@ -24,25 +24,18 @@ ChartWindow::ChartWindow(QWidget *parent, QDate date, const QList<int>& measurem
     QBarSet *setL = new QBarSet("Left (L)");
     QBarSet *setR = new QBarSet("Right (R)");
 
-    // Lists to store bar colors based on healthStatus
+    // Lists to store bar colors
     QList<QColor> barColorsL;
     QList<QColor> barColorsR;
 
-    // Populate the QBarSets and determine bar colors
-    for(int i = 0; i < numGroups; ++i) {
+    // Add measurements to QBarSets
+    for(int i = 0; i < numGroups; i++) {
         // Assign measurements
         int measurementL = measurements[2 * i];     // L measurement
         int measurementR = measurements[2 * i + 1]; // R measurement
 
         *setL << measurementL;
         *setR << measurementR;
-
-        // Assign colors based on healthStatus
-        int healthStatusL = healthStatus[2 * i];
-        int healthStatusR = healthStatus[2 * i + 1];
-
-        barColorsL.append(healthStatusL == 0 ? QColor(Qt::green) : QColor(Qt::red));
-        barColorsR.append(healthStatusR == 0 ? QColor(Qt::green) : QColor(Qt::red));
     }
 
     QBarSeries *series = new QBarSeries();
@@ -57,12 +50,22 @@ ChartWindow::ChartWindow(QWidget *parent, QDate date, const QList<int>& measurem
 
     // Custom categories for the X-axis (e.g., H1, H2, ..., F6)
     QStringList categories;
-    for(int i = 1; i <= numGroups; ++i) {
+    for(int i = 0; i < numGroups; i++) {
+        int healthStatusL = healthStatus[2 * i];
+        int healthStatusR = healthStatus[2 * i + 1];
+        qDebug() << healthStatusL;
+        qDebug() << healthStatusR;
         if(i <= 6) {
-            categories << QString("H%1").arg(i);
+            if (healthStatusL == 0 && healthStatusR == 0)
+                categories << QString("H%1").arg(i + 1);
+            else
+                categories << QString("H%1<br>(alert)").arg(i + 1);
         }
         else {
-            categories << QString("F%1").arg(i - 6);
+            if (healthStatusL == 0 && healthStatusR == 0)
+                categories << QString("F%1").arg(i - 5);
+            else
+                categories << QString("F%1<br>(alert)").arg(i - 5);
         }
     }
 
