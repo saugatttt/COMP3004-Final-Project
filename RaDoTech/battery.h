@@ -3,10 +3,10 @@
 
 #include <QProgressBar>
 
-class battery {
+class Battery: public QObject {
 public:
-    battery(QProgressBar* progressBar);
-    ~battery();
+    Battery(QProgressBar* progressBar);
+    ~Battery();
 
     int getBatteryLevel();
     void chargeBattery();

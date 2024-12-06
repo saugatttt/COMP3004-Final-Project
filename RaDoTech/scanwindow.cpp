@@ -3,25 +3,17 @@
 #include <random>
 
 
-ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, battery* bat) :
+ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, RadoTechDevice* device) :
     QDialog(parent),
+    ui(new Ui::ScanWindow),
     list(list),
     index(0),
-    generator(new DataGenerator()),
-    ui(new Ui::ScanWindow),
-    batteryObj(bat)
+    device(device)
 {
-
     ui->setupUi(this);
     connect(ui->scanButton, SIGNAL(released()), this, SLOT (handleScanPress()));
     connect(ui->saveExitButton, SIGNAL(released()), this, SLOT (handleSaveExitPress()));
     ui->saveExitButton->setVisible(false);
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    std::uniform_int_distribution<> dis(0 - GLOBAL_RAND_RANGE, GLOBAL_RAND_RANGE);
-    globalDeviation = dis(gen);  //will apply to all 24 measurements
 }
 
 ScanWindow::~ScanWindow()
@@ -36,8 +28,8 @@ void ScanWindow::handleSaveExitPress(){
 
 void ScanWindow::handleScanPress()
 {
-    if (batteryObj->getBatteryLevel() == 0) {
-        batteryObj->showLowBatteryWarning();
+    if (device->getBattery()->getBatteryLevel() == 0) {
+        device->getBattery()->showLowBatteryWarning();
         return;
     }
         //device not contacting skin
@@ -50,10 +42,10 @@ void ScanWindow::handleScanPress()
     }
 
     this->ui->contactButton->setChecked(false);
-    int scanResult = generator->generateMeasurement(index, globalDeviation);
+    int scanResult = device->generateMeasurement(index);
     list->append(scanResult);
 
-    index ++;
+    index++;
 
     //scan complete
     if(index > 23){
@@ -86,7 +78,7 @@ void ScanWindow::handleScanPress()
     finalText += num;
     finalText += + ", " + side + " side";
     ui->label->setText(QString::fromStdString(finalText));
-    batteryObj->decreaseBatteryLevel();
+    device->getBattery()->decreaseBatteryLevel();
 
 }
 

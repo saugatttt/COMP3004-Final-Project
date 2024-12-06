@@ -4,7 +4,7 @@
 #include "ui_selectprofiledialog.h"
 #include "ui_updateprofiledialog.h"
 #include "ui_deleteprofiledialog.h"
-#include "scanwindow.h"
+#include "ui_scanwindow.h"
 #include <QEventLoop>
 #include <QTimer>
 #include <QStringListModel>
@@ -14,13 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 
     manager = new UserProfileManager("./users.json", nullptr);
-      
-    batteryObj = new battery(ui->progressBar);
-    connect(ui->chargeButton, SIGNAL(released()), this, SLOT (chargeButtonClicked()));
+    device = new RadoTechDevice(ui->progressBar);
+    connect(ui->chargeButton, &QPushButton::clicked, device->getBattery(), &Battery::chargeBattery);
 
     connect(this, &MainWindow::userChanged, this, &MainWindow::onUserChanged);
     connect(this, &MainWindow::userListChanged, this, &MainWindow::onUserListChanged);
@@ -48,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(selectProfileDialog.getUi()->cancelProfileButton, &QPushButton::clicked, &selectProfileDialog, &SelectProfileDialog::close);
     connect(updateProfileDialog.getUi()->cancelProfileButton, &QPushButton::clicked, &updateProfileDialog, &UpdateProfileDialog::close);
     connect(deleteProfileDialog.getUi()->cancelProfileButton, &QPushButton::clicked, &deleteProfileDialog, &DeleteProfileDialog::close);
+
+    connect(ui->startScanButton, &QPushButton::clicked, this, &MainWindow::onStartScanButtonClicked);
+
 
 }
 
@@ -236,12 +237,10 @@ void MainWindow::deleteUserProfile() {
 }
 
 
-void MainWindow::on_startScanButton_clicked()   //todo: decide where this happens and establish the call sequence
+void MainWindow::onStartScanButtonClicked()
 {
-
     QList<int> *list = new QList<int>();
-
-    ScanWindow* scanWindow = new ScanWindow(nullptr, list,batteryObj);
+    ScanWindow* scanWindow = new ScanWindow(nullptr, list, device);
     scanWindow->setModal(true);
     scanWindow->exec();
     delete scanWindow;
@@ -273,10 +272,5 @@ void MainWindow::on_startScanButton_clicked()   //todo: decide where this happen
     delete scan;
     list->clear();
     delete list;
-}
-
-
-void MainWindow::chargeButtonClicked() {
-    batteryObj->chargeBattery();
 }
 

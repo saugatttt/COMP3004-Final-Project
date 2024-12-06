@@ -162,8 +162,8 @@
   <tabstop>ageUpdateProfileEdit</tabstop>
   <tabstop>weightUpdateProfileEdit</tabstop>
   <tabstop>heightUpdateProfileEdit</tabstop>
-  <tabstop>cancelProfileButton</tabstop>
   <tabstop>confirmProfileButton</tabstop>
+  <tabstop>cancelProfileButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

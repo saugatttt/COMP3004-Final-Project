@@ -10,6 +10,7 @@
 #include "DataGenerator.h"
 #include <random>
 #include "scanwindow.h"
+#include "RadoTechDevice.h"
 #include "battery.h"
 #include "DataProcessor.h"
 
@@ -39,10 +40,12 @@ signals:
 private slots:
     void onUserChanged();
     void onUserListChanged();
+    void onStartScanButtonClicked();
 
 
 private:
     UserProfileManager* manager;
+    RadoTechDevice* device;
     UserProfile* currentUser = nullptr;
 
     CreateProfileDialog createProfileDialog;
@@ -51,11 +54,6 @@ private:
     DeleteProfileDialog deleteProfileDialog;
 
     Ui::MainWindow *ui;
-    battery *batteryObj;
-private slots:
-    void on_startScanButton_clicked();
-    void chargeButtonClicked();
-
 };
 
 
