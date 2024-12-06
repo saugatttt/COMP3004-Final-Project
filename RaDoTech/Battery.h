@@ -13,7 +13,6 @@ public:
     void decreaseBatteryLevel();
     void showLowBatteryWarning();
 
-
 private:
     int batteryLevel;
     QProgressBar* progressBar;

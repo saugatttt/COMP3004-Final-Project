@@ -1,4 +1,4 @@
-#include "battery.h"
+#include "Battery.h"
 #include <QMessageBox>
 #include <QPushButton>
 
@@ -64,6 +64,3 @@ void Battery::showLowBatteryWarning() {
         msgBox.close();
     }
 }
-
-
-
