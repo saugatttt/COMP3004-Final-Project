@@ -29,6 +29,7 @@ public:
 
     bool addUser(UserProfile* user);
     bool updateUser(const QString& firstName, const QString& lastName, const QString& email, const QString& gender, int age, float weight, float height);
+    bool updateUser(const QString& email, Scan* scan);
     bool deleteUser(const QString& email);
     QList<UserProfile*> loadUsers() const;
     bool saveToJson() const;

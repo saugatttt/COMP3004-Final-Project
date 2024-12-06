@@ -74,34 +74,8 @@ void MainWindow::onUserChanged() {
     ui->tabWidget->setTabEnabled(3, true);
     ui->tabWidget->setTabEnabled(4, true);
 
-  // todo: get the actual user's scans
+    updateScanListView();
 
-    //testing, auto-generated scans
-    QList<Scan> userScans;
-
-    QList<int> rawData;
-
-    for(int i = 0; i<24; ++i){
-        int value = device->generateMeasurement(i);
-        rawData.append(value);
-    }
-    Scan* scan1 = DataProcessor::createScan(rawData);
-    Scan* scan2 = DataProcessor::createScan(rawData);
-
-    userScans.append(*scan1);
-    userScans.append(*scan2);
-
-    //the following can be used for real
-    QStringList scanDates = QStringList();
-    for (Scan scan : userScans) {
-        scanDates.append(scan.getDateTime().toString("yyyy-MM-dd   HH:mm:ss a t"));
-    }
-    QStringListModel* listModel = new QStringListModel(scanDates, ui->scanListView);
-
-    ui->scanListView->setModel(listModel);
-
-    delete scan1;
-    delete scan2;
     return;
 }
 
@@ -280,33 +254,11 @@ void MainWindow::onStartScanButtonClicked()
     scanWindow->exec();
     delete scanWindow;
 
-    //basic testing of data processor, feel free to remove
-    if(list->size() != 24){
-        list->clear();
-        delete list;
-        return;
-    }
-    Scan* scan = DataProcessor::createScan(*list);
-    QList<int> scanMeasurements = scan->getMeasurements();
-    QList<HealthStatus> scanHealthLevels = scan->getHealthLevels();
-    for(int value : scanMeasurements){
-        qDebug() << value;
-    }
-    for(int i = 0; i<scanHealthLevels.size(); ++i){
-        std::string healthLevelAsString;
-        HealthStatus status = scanHealthLevels.at(i);
-
-        if(status == normal)
-            healthLevelAsString = "normal";
-        else if(status == high)
-            healthLevelAsString = "high";
-        else
-            healthLevelAsString = "low";
-
-        qDebug() << QString::fromStdString(healthLevelAsString);
+    if (list->size() == 24){
+        manager->addScan(currentUser->getEmail(), DataProcessor::createScan(*list));
+        updateScanListView();
     }
 
-    delete scan;
     list->clear();
     delete list;
 }
@@ -332,3 +284,15 @@ void MainWindow::onConfirmViewScanButtonClicked(){
    // dataVisualizer.viewScan(currScan);
    // ui->confirmViewScanButton->setEnabled(true);
 }
+
+void MainWindow::updateScanListView() {
+    QList<Scan*> userScans = currentUser->getHealthData()->getScans();
+
+    QStringList scanDates = QStringList();
+    for (Scan* scan : userScans) {
+        scanDates.append(scan->getDateTime().toString("yyyy-MM-dd   HH:mm:ss a t"));
+    }
+    QStringListModel* listModel = new QStringListModel(scanDates, ui->scanListView);
+    ui->scanListView->setModel(listModel);
+}
+

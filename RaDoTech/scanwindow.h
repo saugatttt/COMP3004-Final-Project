@@ -27,7 +27,6 @@ private:
     Ui::ScanWindow *ui;
     QList<int>* list;
     int index;
-    DataGenerator* generator;
     RadoTechDevice* device;
 };
 

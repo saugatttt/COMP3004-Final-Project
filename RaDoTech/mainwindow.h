@@ -31,6 +31,7 @@ public:
     void selectUserProfile();
     void updateUserProfile();
     void deleteUserProfile();
+    void updateScanListView();
 
 signals:
     void userChanged();
