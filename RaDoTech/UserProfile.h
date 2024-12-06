@@ -37,6 +37,8 @@ public:
     void setWeight(float w);
     void setHeight(float h);
 
+    void addScan(Scan* scan);
+
 };
 
 #endif
