@@ -10,10 +10,10 @@
 #include "DataGenerator.h"
 #include <random>
 #include "scanwindow.h"
+#include "chartwindow.h"
 #include "RadoTechDevice.h"
 #include "Battery.h"
 #include "DataProcessor.h"
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,6 +43,8 @@ private slots:
     void onUserListChanged();
     void onStartScanButtonClicked();
     void onConfirmViewScanButtonClicked();
+    void on_testButton_clicked();
+
 
 private:
     UserProfileManager* manager;

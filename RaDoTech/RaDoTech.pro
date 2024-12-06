@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +25,7 @@ SOURCES += \
     selectprofiledialog.cpp \
     updateprofiledialog.cpp \
     scanwindow.cpp \
+    chartwindow.cpp \
 
 
 HEADERS += \
@@ -41,15 +42,18 @@ HEADERS += \
     createprofiledialog.h \
     mainwindow.h \
     scanwindow.h \
+    chartwindow.h \
     selectprofiledialog.h \
     updateprofiledialog.h \
 
 
 FORMS += \
+    chartwindow.ui \
     deleteprofiledialog.ui \
     createprofiledialog.ui \
     mainwindow.ui \
     scanwindow.ui \
+    chartwindow.ui \
     selectprofiledialog.ui \
     updateprofiledialog.ui
     
