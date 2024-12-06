@@ -2,6 +2,7 @@
 #define CHARTWINDOW_H
 
 #include "ui_chartwindow.h"
+#include <Scan.h>
 #include <QDebug>
 #include <QMessageBox>
 #include <QDialog>
@@ -17,14 +18,14 @@ class ChartWindow : public QDialog {
     public:
         explicit ChartWindow(QWidget *parent = nullptr, QDateTime date = QDateTime(),
             const QList<int>& measurements = QList<int>(),
-                const QList<int>& healthStatus = QList<int>());
+                const QList<HealthStatus>& healthStatus = QList<HealthStatus>());
         ~ChartWindow();
 
     private:
         Ui::ChartWindow *ui;
         QDateTime date;
         QList<int> measurements;
-        QList<int> healthStatus;
+        QList<HealthStatus> healthStatus;
 };
 
 #endif // CHARTWINDOW_H
