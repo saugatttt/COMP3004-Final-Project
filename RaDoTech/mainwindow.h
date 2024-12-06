@@ -11,7 +11,7 @@
 #include <random>
 #include "scanwindow.h"
 #include "RadoTechDevice.h"
-#include "battery.h"
+#include "Battery.h"
 #include "DataProcessor.h"
 
 
