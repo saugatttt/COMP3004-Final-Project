@@ -255,7 +255,7 @@ void MainWindow::chargeButtonClicked() {
 void MainWindow::on_testButton_clicked()
 {
     // TODO: get scan data from Scan object
-    QDate date = QDate::currentDate();
+    QDateTime date = QDateTime::currentDateTime();
     QList<int> measurements;
     QList<int> healthStatus;
     for (int i = 0; i < 24; i++) {

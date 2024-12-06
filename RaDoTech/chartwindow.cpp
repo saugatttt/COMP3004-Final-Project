@@ -13,7 +13,7 @@
 
 using namespace QtCharts;
 
-ChartWindow::ChartWindow(QWidget *parent, QDate date, const QList<int>& measurements, const QList<int>& healthStatus) :
+ChartWindow::ChartWindow(QWidget *parent, QDateTime date, const QList<int>& measurements, const QList<int>& healthStatus) :
     QDialog(parent), date(date), measurements(measurements), healthStatus(healthStatus),
     ui(new Ui::ChartWindow) {
     ui->setupUi(this);
@@ -44,28 +44,41 @@ ChartWindow::ChartWindow(QWidget *parent, QDate date, const QList<int>& measurem
 
     QChart *chart = new QChart();
     chart->addSeries(series);
-    QString chartTitle = QString("Scan on %1").arg(date.toString("yyyy-MM-dd"));
+    QString chartTitle = QString("Scan on %1").arg(date.toString("yyyy-MM-dd hh:mm"));
     chart->setTitle(chartTitle);
     chart->setAnimationOptions(QChart::SeriesAnimations);
 
     // Custom categories for the X-axis (e.g., H1, H2, ..., F6)
     QStringList categories;
+    QString organs[] = {
+        "lungs",
+        "pericardium",
+        "heart",
+        "small<br>intestine",
+        "lymph<br>vessel", 
+        "large<br>intestine", 
+        "spleen<br>pancreas",
+        "liver",
+        "kidney<br>adrenal glands", 
+        "bladder",
+        "gallbladder",
+        "stomach",
+    };
+
     for(int i = 0; i < numGroups; i++) {
         int healthStatusL = healthStatus[2 * i];
         int healthStatusR = healthStatus[2 * i + 1];
-        qDebug() << healthStatusL;
-        qDebug() << healthStatusR;
         if(i <= 6) {
             if (healthStatusL == 0 && healthStatusR == 0)
-                categories << QString("H%1").arg(i + 1);
+                categories << QString("H%1<br>%2").arg(i + 1).arg(organs[i]);
             else
-                categories << QString("H%1<br>(alert)").arg(i + 1);
+                categories << QString("H%1<br>%2<br>(alert)").arg(i + 1).arg(organs[i]);
         }
         else {
             if (healthStatusL == 0 && healthStatusR == 0)
-                categories << QString("F%1").arg(i - 5);
+                categories << QString("F%1<br>%2").arg(i - 5).arg(organs[i]);
             else
-                categories << QString("F%1<br>(alert)").arg(i - 5);
+                categories << QString("F%1<br>%2<br>(alert)").arg(i - 5).arg(organs[i]);
         }
     }
 

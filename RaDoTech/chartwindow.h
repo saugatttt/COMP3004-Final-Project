@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QDialog>
-#include <QDate>
+#include <QDateTime>
 #include <QList>
 #include <QtCharts/QChartView>
 
@@ -15,14 +15,14 @@ class ChartWindow : public QDialog {
     Q_OBJECT
 
     public:
-        explicit ChartWindow(QWidget *parent = nullptr, QDate date = QDate(),
+        explicit ChartWindow(QWidget *parent = nullptr, QDateTime date = QDateTime(),
             const QList<int>& measurements = QList<int>(),
                 const QList<int>& healthStatus = QList<int>());
         ~ChartWindow();
 
     private:
         Ui::ChartWindow *ui;
-        QDate date;
+        QDateTime date;
         QList<int> measurements;
         QList<int> healthStatus;
 };
