@@ -46,6 +46,10 @@ private slots:
     void on_testButton_clicked();
 
 
+public slots:
+    void showRecommendation();
+
+
 private:
     UserProfileManager* manager;
     RadoTechDevice* device;

@@ -23,6 +23,9 @@ private slots:
     void handleScanPress();
     void handleSaveExitPress();
 
+signals:
+    void scanComplete();
+
 private:
     Ui::ScanWindow *ui;
     QList<int>* list;

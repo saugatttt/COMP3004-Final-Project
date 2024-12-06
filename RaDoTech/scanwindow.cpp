@@ -53,6 +53,8 @@ void ScanWindow::handleScanPress()
         ui->scanButton->setVisible(false);
         ui->contactButton->setVisible(false);
         ui->saveExitButton->setVisible(true);
+
+        emit scanComplete();
         return;
     }
 
