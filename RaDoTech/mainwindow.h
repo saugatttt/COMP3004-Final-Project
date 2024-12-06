@@ -11,6 +11,7 @@
 #include <random>
 #include "scanwindow.h"
 #include "battery.h"
+#include "DataProcessor.h"
 
 
 QT_BEGIN_NAMESPACE
