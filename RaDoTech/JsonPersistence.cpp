@@ -47,6 +47,19 @@ bool JsonPersistence::updateUser(const QString& email, Scan* scan) {
         return false;
     }
     QJsonObject user = userData.takeAt(index).toObject();
+    QJsonArray scans = user["healthData"].toArray();
+
+    QJsonArray measurementArr;
+    for (int i = 0; i < scan->getMeasurements().length(); i++) {
+        measurementArr.append(scan->getMeasurements()[i]);
+    }
+    QJsonObject scanObj;
+    scanObj["date"] = scan->getDateTime().toString();
+    scanObj["measurements"] = measurementArr;
+
+    scans.append(scanObj);
+
+    user["healthData"] = scans;
 
     userData.insert(index, user);
 
@@ -120,7 +133,10 @@ QJsonObject JsonPersistence::userProfileToJson(UserProfile* user) const
         for (int i = 0; i < scan->getMeasurements().length(); i++) {
             measurementArr.append(scan->getMeasurements()[i]);
         }
-        scanArr.append(measurementArr);
+        QJsonObject scanObj;
+        scanObj["date"] = scan->getDateTime().toString();
+        scanObj["measurements"] = measurementArr;
+        scanArr.append(scanObj);
     }
     json["healthData"] = scanArr;
 
@@ -135,12 +151,13 @@ UserProfile* JsonPersistence::jsonToUserProfile(const QJsonObject& json) const
 
     QJsonArray scanArr = json["healthData"].toArray();
     for (QJsonValue scan : scanArr) {
-        QJsonArray measurementArr = scan.toArray();
+        QJsonObject scanObj = scan.toObject();
+        QJsonArray measurementArr = scanObj["measurements"].toArray();
         QList<int> nums;
         for (QJsonValue measurement : measurementArr){
             nums.append(measurement.toInt());
         }
-        user->addScan(DataProcessor::createScan(nums));
+        user->addScan(DataProcessor::createScan(nums, QDateTime::fromString(scanObj["date"].toString())));
     }
     return user;
 }
