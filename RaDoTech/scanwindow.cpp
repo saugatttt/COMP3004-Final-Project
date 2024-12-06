@@ -19,7 +19,6 @@ ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, RadoTechDevice* device
 ScanWindow::~ScanWindow()
 {
     delete ui;
-    delete generator;
 }
 
 void ScanWindow::handleSaveExitPress(){
