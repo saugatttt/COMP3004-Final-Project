@@ -41,6 +41,7 @@ private slots:
     void onUserChanged();
     void onUserListChanged();
     void onStartScanButtonClicked();
+    void onConfirmViewScanButtonClicked();
 
 private:
     UserProfileManager* manager;
