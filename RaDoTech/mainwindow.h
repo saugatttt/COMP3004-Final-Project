@@ -42,7 +42,6 @@ private slots:
     void onUserListChanged();
     void onStartScanButtonClicked();
 
-
 private:
     UserProfileManager* manager;
     RadoTechDevice* device;

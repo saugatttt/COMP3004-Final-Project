@@ -134,6 +134,32 @@ User Interface</string>
        <string>Start Scan</string>
       </property>
      </widget>
+     <widget class="QCheckBox" name="jewelryToggle">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>160</y>
+        <width>171</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Take off your jewelry</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="moisturizedToggle">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>190</y>
+        <width>211</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Moisturize your skin</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">

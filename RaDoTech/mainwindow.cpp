@@ -48,8 +48,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deleteProfileDialog.getUi()->cancelProfileButton, &QPushButton::clicked, &deleteProfileDialog, &DeleteProfileDialog::close);
 
     connect(ui->startScanButton, &QPushButton::clicked, this, &MainWindow::onStartScanButtonClicked);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -239,6 +237,14 @@ void MainWindow::deleteUserProfile() {
 
 void MainWindow::onStartScanButtonClicked()
 {
+    if(!ui->jewelryToggle->isChecked() || !ui->moisturizedToggle->isChecked()){
+        QMessageBox msgError;
+        msgError.setText("You must remove your jewelry and moisturize your skin before starting your scan");
+        msgError.setIcon(QMessageBox::Warning);
+        msgError.exec();
+        return;
+    }
+
     QList<int> *list = new QList<int>();
     ScanWindow* scanWindow = new ScanWindow(nullptr, list, device);
     scanWindow->setModal(true);
@@ -246,15 +252,17 @@ void MainWindow::onStartScanButtonClicked()
     delete scanWindow;
 
     //basic testing of data processor, feel free to remove
+    if(list->size() != 23){
+        list->clear();
+        delete list;
+        return;
+    }
     Scan* scan = DataProcessor::createScan(*list);
-
     QList<int> scanMeasurements = scan->getMeasurements();
     QList<HealthStatus> scanHealthLevels = scan->getHealthLevels();
-
     for(int value : scanMeasurements){
         qDebug() << value;
     }
-
     for(int i = 0; i<scanHealthLevels.size(); ++i){
         std::string healthLevelAsString;
         HealthStatus status = scanHealthLevels.at(i);
