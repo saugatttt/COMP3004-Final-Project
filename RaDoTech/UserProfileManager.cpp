@@ -54,6 +54,7 @@ bool UserProfileManager::deleteUserProfile(const QString& email) {
     for (int i = 0; i < users.size(); ++i) {
         if (users[i]->getEmail() == email) {
             if (persistenceStrategy.deleteUser(email)) {
+                delete users[i];
                 users.removeAt(i);
                 return true;
             }

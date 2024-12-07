@@ -55,8 +55,8 @@ MainWindow::~MainWindow()
 {
     delete manager;
     delete ui;
+    delete device;
 }
-
 
 void MainWindow::onUserChanged() {
     if (currentUser == nullptr){
