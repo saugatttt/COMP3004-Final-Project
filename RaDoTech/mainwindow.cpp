@@ -258,6 +258,9 @@ void MainWindow::onStartScanButtonClicked()
         return;
     }
 
+    ui->jewelryToggle->setChecked(false);
+    ui->moisturizedToggle->setChecked(false);
+
     QList<int> *list = new QList<int>();
   
     ScanWindow* scanWindow = new ScanWindow(nullptr, list, device);
