@@ -70,15 +70,19 @@ ChartWindow::ChartWindow(QWidget *parent, QDateTime date, const QList<int>& meas
         int healthStatusR = healthStatus[2 * i + 1];
         if(i <= 6) {
             if (healthStatusL == 0 && healthStatusR == 0)
-                categories << QString("H%1<br>%2").arg(i + 1).arg(organs[i]);
-            else
-                categories << QString("H%1<br>%2<br>(alert)").arg(i + 1).arg(organs[i]);
+                categories << QString("H%1<br>%2").arg(i + 1).arg(organs[i]);  //HealthStatus{ normal, high, low };
+            else if (healthStatusL == 1 || healthStatusR == 1)
+                categories << QString("H%1<br>%2<br>(high)").arg(i + 1).arg(organs[i]);
+            else if (healthStatusL == 2 || healthStatusR == 2)
+                categories << QString("H%1<br>%2<br>(low)").arg(i + 1).arg(organs[i]);
         }
         else {
             if (healthStatusL == 0 && healthStatusR == 0)
                 categories << QString("F%1<br>%2").arg(i - 5).arg(organs[i]);
-            else
-                categories << QString("F%1<br>%2<br>(alert)").arg(i - 5).arg(organs[i]);
+            else if (healthStatusL == 1 && healthStatusR == 1)
+                categories << QString("F%1<br>%2<br>(high)").arg(i - 5).arg(organs[i]);
+            else if (healthStatusL == 2 && healthStatusR == 2)
+                categories << QString("F%1<br>%2<br>(low)").arg(i - 5).arg(organs[i]);
         }
     }
 
