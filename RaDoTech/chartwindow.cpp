@@ -79,9 +79,9 @@ ChartWindow::ChartWindow(QWidget *parent, QDateTime date, const QList<int>& meas
         else {
             if (healthStatusL == 0 && healthStatusR == 0)
                 categories << QString("F%1<br>%2").arg(i - 5).arg(organs[i]);
-            else if (healthStatusL == 1 && healthStatusR == 1)
+            else if (healthStatusL == 1 || healthStatusR == 1)
                 categories << QString("F%1<br>%2<br>(high)").arg(i - 5).arg(organs[i]);
-            else if (healthStatusL == 2 && healthStatusR == 2)
+            else if (healthStatusL == 2 || healthStatusR == 2)
                 categories << QString("F%1<br>%2<br>(low)").arg(i - 5).arg(organs[i]);
         }
     }
