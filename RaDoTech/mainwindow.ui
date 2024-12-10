@@ -21,13 +21,13 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>20</y>
       <width>781</width>
       <height>521</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="Home">
      <attribute name="title">
@@ -252,16 +252,35 @@ RadoTech Device:</string>
       <string>Recommendations</string>
      </attribute>
      <widget class="QLabel" name="recText">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>20</y>
+        <y>100</y>
         <width>631</width>
-        <height>241</height>
+        <height>331</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>                          You must complete a scan first to obtain recommendations</string>
+       <string>Your overall tests were okay. However, there are a few actions you can take to improve. It's important to focus on maintaining a balanced diet, staying hydrated, and getting regular exercise. Additionally, try to get enough sleep and manage your stress effectively. By implementing these few tips into your daily routine, you find a large improvement in your well being, mental health, and better test results. 
+
+
+Remember, RaDoTech should be used for functional health monitoring and express CheckUp. RaDoTech is not meant to supersede any medical advice from your medical practitioner.
+</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">
@@ -288,6 +307,34 @@ RadoTech Device:</string>
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="recText_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>160</y>
+        <width>631</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>You must have completed at least one scan before you can receive recommendations.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>

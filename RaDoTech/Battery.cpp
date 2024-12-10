@@ -2,14 +2,13 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-Battery::Battery(QProgressBar* progressBar) : QObject(nullptr), batteryLevel(100), progressBar(progressBar)
+Battery::Battery(QProgressBar* progressBar, QObject* parent) : QObject(parent), batteryLevel(100), progressBar(progressBar)
 {
     progressBar->setRange(0, 100);
     progressBar->setValue(batteryLevel);
 }
 
 Battery::~Battery(){
-
 }
 
 
@@ -62,5 +61,6 @@ void Battery::showLowBatteryWarning() {
     }
     else {
         msgBox.close();
+        emit didNotCharge();
     }
 }

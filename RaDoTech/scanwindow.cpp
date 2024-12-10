@@ -14,6 +14,7 @@ ScanWindow::ScanWindow(QWidget *parent, QList<int>* list, RadoTechDevice* device
     connect(ui->scanButton, SIGNAL(released()), this, SLOT (handleScanPress()));
     connect(ui->saveExitButton, SIGNAL(released()), this, SLOT (handleSaveExitPress()));
     ui->saveExitButton->setVisible(false);
+    connect(device->getBattery(), &Battery::didNotCharge, this, &ScanWindow::close);
 }
 
 ScanWindow::~ScanWindow()
