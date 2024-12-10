@@ -264,8 +264,6 @@ void MainWindow::onStartScanButtonClicked()
     QList<int> *list = new QList<int>();
   
     ScanWindow* scanWindow = new ScanWindow(nullptr, list, device);
-    connect(scanWindow, &ScanWindow::scanComplete, this, &MainWindow::showRecommendation);
-
     scanWindow->setModal(true);
     scanWindow->exec();
     delete scanWindow;
@@ -286,7 +284,7 @@ void MainWindow::onConfirmViewScanButtonClicked(){
 
     int selectedIndex = ui->scanListView->currentIndex().row();
     if (selectedIndex == -1){
-        ui->invalidSelectionLabel->setText("No user selected. Please select a user.");
+        ui->invalidSelectionLabel->setText("No scan selected. Please select a scan.");
         QEventLoop loop;
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
@@ -304,6 +302,8 @@ void MainWindow::onConfirmViewScanButtonClicked(){
 }
 
 void MainWindow::updateScanListView() {
+    showRecommendation();
+
     QList<Scan*> userScans = currentUser->getHealthData()->getScans();
 
     QStringList scanDates = QStringList();
@@ -316,13 +316,23 @@ void MainWindow::updateScanListView() {
 
 void MainWindow::showRecommendation()
 {
-    ui->recText->clear();
-    QString recommendation = "Your overall tests were okay however, there are a few things you can do to improve. "
-                             "It's important to focus on maintaining a balanced diet, staying hydrated, and getting regular exercise. "
-                             "Additionally try to get enough sleep and manage your stress effectively."
-                             "By implementing these few tips into your daily routine, you find a large improvement in your well being, mental health, and better test results.";
+    if (currentUser == nullptr || currentUser->getHealthData()->getScans().length() == 0){
+        ui->recText->setVisible(false);
+        ui->recText_2->setVisible(true);
+//        ui->recText->setText("");
+//        ui->recText_2->setText("You must have completed at least one scan before you can receive recommendations.");
+    }
+    else {
+        ui->recText->setVisible(true);
+        ui->recText_2->setVisible(false);
+//        ui->recText->setText("Your overall tests were okay. However, there are a few actions you can take to improve. "
+//                             "It's important to focus on maintaining a balanced diet, staying hydrated, and getting regular exercise. "
+//                             "Additionally, try to get enough sleep and manage your stress effectively. By implementing these few tips "
+//                             "into your daily routine, you find a large improvement in your well being, mental health, and better test "
+//                             "results. \n\n\nRemember, RaDoTech should be used for functional health monitoring and express CheckUp. "
+//                             "RaDoTech is not meant to supersede any medical advice from your medical practitioner.\n");
+//        ui->recText_2->setText("");
+    }
 
-    ui->recText->setText(recommendation);
-    ui->recText->setWordWrap(true);
 }
 

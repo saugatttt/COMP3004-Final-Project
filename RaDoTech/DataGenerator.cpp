@@ -18,9 +18,6 @@ int DataGenerator::generateMeasurement(int index, int deviation){
     int min = modifiedAverage - INDIVIDUAL_RAND_RANGE;
     int max = modifiedAverage + INDIVIDUAL_RAND_RANGE;
 
-    qDebug()<< "min: " << min;
-    qDebug()<< "max: " << max;
-
     //apply individual randomizer
     std::random_device rd;
     std::mt19937 gen(rd());
